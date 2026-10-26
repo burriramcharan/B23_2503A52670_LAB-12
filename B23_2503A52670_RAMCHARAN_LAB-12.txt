@@ -1,0 +1,521 @@
+LAB ASSIGNMENT-12
+
+TASK-1
+Task: Use an AI tool to generate a Python program that implements the Linear Search
+algorithm.
+Instructions:
+Prompt AI to create a function linear_search(arr, target) that searches
+for a target element in a list.
+Return the index of the target element if found; otherwise, return -1.
+Ask AI to include a docstring explaining the best-case, average-case, and
+worst-case time complexities.
+Test the function with different inputs, including an empty list and a target that
+is not present.
+Expected Output:
+A working Python program implementing Linear Search.
+Test cases with outputs.
+A brief explanation of time complexity.
+
+
+PROMPT:
+Write a simple Python program to implement Linear Search using a function `linear_search(arr, target)`. Return the index if the target is found; otherwise, return -1. Include a docstring explaining best-case, average-case, and worst-case time complexities. Test with a normal list, an empty list, and a target that is not present. Display the output.
+
+CODE:
+
+def linear_search(arr, target):
+	"""Return the target's index, or -1 if it is absent.
+
+	Best-case time: O(1); average-case: O(n); worst-case: O(n).
+	"""
+	for index, value in enumerate(arr):
+		if value == target:
+			return index
+	return -1
+
+
+numbers = [4, 7, 2, 9, 5]
+print("Normal list (target 2):", linear_search(numbers, 2))
+print("Empty list:", linear_search([], 3))
+print("Target not present:", linear_search(numbers, 8))
+
+
+OUTPUT:
+
+Normal list (target 2): 2
+Empty list: -1
+Target not present: -1
+
+TASK-2
+
+Task: Use AI to generate an efficient Python program that implements Binary Search
+on a sorted list.
+Instructions:
+Prompt AI to create a function binary_search(arr, target).
+Use the iterative approach to find the target element.
+
+Return the index if the element is found; otherwise, return -1.
+Ask AI to explain why the input list must be sorted.
+Include best-case, average-case, and worst-case time complexities.
+Test the program with the first element, last element, middle element, and a
+missing element.
+Expected Output:
+A working Binary Search program.
+Test results for different target values.
+An explanation of why Binary Search is more efficient than Linear Search for
+large, sorted lists.
+
+PROMPT:
+
+def binary_search(arr, target):
+	"""Return target's index in sorted arr, or -1 if it is absent.
+
+	Time complexity: best O(1), average O(log n), worst O(log n).
+
+	The list must be sorted so comparisons indicate which half can be
+	discarded. Binary Search is faster than Linear Search on large sorted
+	lists because it halves the search range each step; Linear Search checks
+	elements one at a time.
+	"""
+	left = 0
+	right = len(arr) - 1
+
+	while left <= right:
+		middle = (left + right) // 2
+		if arr[middle] == target:
+			return middle
+		if arr[middle] < target:
+			left = middle + 1
+		else:
+			right = middle - 1
+
+	return -1
+
+
+if __name__ == "__main__":
+	numbers = [1, 3, 5, 7, 9, 11, 13]
+	tests = [
+		("first element (1)", 1),
+		("last element (13)", 13),
+		("middle element (7)", 7),
+		("missing element (8)", 8),
+	]
+
+	for description, target in tests:
+		print(f"Search for {description}: {binary_search(numbers, target)}")
+
+
+OUTPUT:
+
+Search for first element (1): 0
+Search for last element (13): 6
+Search for middle element (7): 3
+Search for missing element (8): -1
+
+
+TASK-3
+
+Scenario: A university maintains student records containing roll numbers, names, and
+marks. Faculty members need to search for student records using roll numbers.
+Student Task:
+Use AI to recommend either Linear Search or Binary Search for searching
+student roll numbers.
+Implement both algorithms in Python.
+Test the algorithms using a list of student roll numbers.
+Compare the results when the roll numbers are stored in unsorted and sorted
+order.
+Explain the time complexity of both algorithms.
+Expected Output:
+Python functions for Linear Search and Binary Search.
+Sample student records and test results.
+A comparison table showing algorithm, input requirements, and time
+complexity.
+Justification for selecting the appropriate search algorithm.
+
+PROMPT:
+Write a simple Python program to implement both Linear Search and Binary Search for university student roll numbers. Use sample student records and test both algorithms with sorted and unsorted roll numbers. Display the search results, compare their time complexities, and explain which algorithm is better and why.
+
+
+CODE:
+
+""Lab 12 practice utilities.
+
+This module contains a few reusable helper functions and a small demo program.
+It is intentionally simple, reliable, and free of syntax/runtime issues.
+"""
+
+from __future__ import annotations
+
+
+def factorial(n: int) -> int:
+    """Return n! for a non-negative integer."""
+    if n < 0:
+        raise ValueError("n must be non-negative")
+
+    result = 1
+    for value in range(2, n + 1):
+        result *= value
+    return result
+
+
+def is_prime(value: int) -> bool:
+    """Return True if value is prime, otherwise False."""
+    if value < 2:
+        return False
+    if value in (2, 3):
+        return True
+    if value % 2 == 0:
+        return False
+
+    limit = int(value ** 0.5)
+    for divisor in range(3, limit + 1, 2):
+        if value % divisor == 0:
+            return False
+    return True
+
+
+def average(numbers):
+    """Return the arithmetic mean of a non-empty sequence of numbers."""
+    if not numbers:
+        raise ValueError("numbers cannot be empty")
+    return sum(numbers) / len(numbers)
+
+
+def count_vowels(text: str) -> int:
+    """Count vowels in a string, ignoring case."""
+    vowels = "aeiou"
+    return sum(1 for ch in text.lower() if ch in vowels)
+
+
+def celsius_to_fahrenheit(celsius: float) -> float:
+    """Convert Celsius to Fahrenheit."""
+    return (celsius * 9 / 5) + 32
+
+
+def fahrenheit_to_celsius(fahrenheit: float) -> float:
+    """Convert Fahrenheit to Celsius."""
+    return (fahrenheit - 32) * 5 / 9
+
+
+def main() -> None:
+    """Simple demonstration of the utility functions."""
+    print("Lab 12 Utility Demo")
+    print("Factorial of 5:", factorial(5))
+    print("Is 17 prime?", is_prime(17))
+    print("Average of [2, 4, 6, 8]:", average([2, 4, 6, 8]))
+    print("Vowels in 'Hello, World!':", count_vowels("Hello, World!"))
+    print("32C in Fahrenheit:", celsius_to_fahrenheit(32))
+    print("68F in Celsius:", fahrenheit_to_celsius(68))
+
+
+if __name__ == "__main__":
+    main()
+
+OUTPUT:
+
+Search for first element (1): 0
+Search for last element (13): 6
+Search for middle element (7): 3
+Search for missing element (8): -1
+PS C:\ai assisted assignments> & "C:\Users\RAM CHARAN\AppData\Local\Programs\Python\Python314\python.exe" "c:/ai assisted assignments/lab12(2).py"
+Search for first element (1): 0
+Search for last element (13): 6
+Search for middle element (7): 3
+Search for missing element (8): -1
+PS C:\ai assisted assignments> & "C:\Users\RAM CHARAN\AppData\Local\Programs\Python\Python314\python.exe" "c:/ai assisted assignments/lab12(3).py"
+Unsorted roll numbers: [104, 101, 106, 102, 103]
+Linear search (unsorted): {'roll_number': 103, 'name': 'Eli'}
+Binary search (sorted copy): {'roll_number': 103, 'name': 'Eli'}
+
+Sorted roll numbers: [101, 102, 103, 104, 106]
+Linear search (sorted): {'roll_number': 103, 'name': 'Eli'}
+Binary search (sorted): {'roll_number': 103, 'name': 'Eli'}
+
+Time complexity:
+Linear search: O(n) worst case; it works on sorted or unsorted records.
+Binary search: O(log n) worst case; records must be sorted first.
+Binary search is faster for repeated searches on large, sorted lists. Linear search is simpler for small or unsorted lists because sorting first takes O(n log n).
+
+
+TASK-4
+Scenario: A college library maintains a list of book identification numbers. Students
+and librarians need to find books quickly using their book IDs.
+Student Task:
+Use AI to generate a Python program that searches for a book ID using Linear
+Search.
+Implement Binary Search to search for the same book ID in a sorted list.
+Test both algorithms when the book ID exists and when it does not exist.
+Measure and compare the number of comparisons performed by each
+algorithm.
+Ask AI to explain which algorithm is suitable for a large, sorted collection of
+book IDs.
+Expected Output:
+Working Python programs for both searching algorithms.
+Test cases with search results.
+A comparison of the number of comparisons performed.
+A conclusion explaining the efficiency of each algorithm.
+
+
+PROMPT:
+Write a simple Python program to search for book IDs using Linear Search and Binary Search. Test both algorithms when the book ID is present and absent. Count and display the number of comparisons for each search. Explain their efficiency and conclude which algorithm is better for a large, sorted list of book IDs.
+
+
+CODE:
+
+def linear_search(book_ids, target):
+	comparisons = 0
+	for index, book_id in enumerate(book_ids):
+		comparisons += 1
+		if book_id == target:
+			return index, comparisons
+	return -1, comparisons
+
+
+def binary_search(book_ids, target):
+	low, high = 0, len(book_ids) - 1
+	comparisons = 0
+
+	while low <= high:
+		middle = (low + high) // 2
+		comparisons += 1
+		if book_ids[middle] == target:
+			return middle, comparisons
+
+		comparisons += 1
+		if target < book_ids[middle]:
+			high = middle - 1
+		else:
+			low = middle + 1
+
+	return -1, comparisons
+
+
+# Binary search requires the list to be sorted.
+book_ids = [101, 115, 123, 140, 156, 172, 189, 205, 221, 240]
+test_ids = [156, 999]  # Test one ID that is present and one that is absent.
+
+print("Book IDs:", book_ids)
+for target in test_ids:
+	print(f"\nSearching for book ID {target}:")
+	for name, search in (("Linear search", linear_search),
+						 ("Binary search", binary_search)):
+		index, comparisons = search(book_ids, target)
+		result = f"found at index {index}" if index != -1 else "not found"
+		print(f"{name}: {result}; {comparisons} comparison(s)")
+
+print("\nEfficiency:")
+print("Linear search takes O(n) time and works with unsorted lists.")
+print("Binary search takes O(log n) time but requires sorted IDs.")
+print("For a large, sorted list, binary search is more efficient.")
+
+
+CODE:
+
+def linear_search(book_ids, target):
+	comparisons = 0
+	for index, book_id in enumerate(book_ids):
+		comparisons += 1
+		if book_id == target:
+			return index, comparisons
+	return -1, comparisons
+
+
+def binary_search(book_ids, target):
+	low, high = 0, len(book_ids) - 1
+	comparisons = 0
+
+	while low <= high:
+		middle = (low + high) // 2
+		comparisons += 1
+		if book_ids[middle] == target:
+			return middle, comparisons
+
+		comparisons += 1
+		if target < book_ids[middle]:
+			high = middle - 1
+		else:
+			low = middle + 1
+
+	return -1, comparisons
+
+
+# Binary search requires the list to be sorted.
+book_ids = [101, 115, 123, 140, 156, 172, 189, 205, 221, 240]
+test_ids = [156, 999]  # Test one ID that is present and one that is absent.
+
+print("Book IDs:", book_ids)
+for target in test_ids:
+	print(f"\nSearching for book ID {target}:")
+	for name, search in (("Linear search", linear_search),
+						 ("Binary search", binary_search)):
+		index, comparisons = search(book_ids, target)
+		result = f"found at index {index}" if index != -1 else "not found"
+		print(f"{name}: {result}; {comparisons} comparison(s)")
+
+print("\nEfficiency:")
+print("Linear search takes O(n) time and works with unsorted lists.")
+print("Binary search takes O(log n) time but requires sorted IDs.")
+print("For a large, sorted list, binary search is more efficient.")
+
+OUTPUT:
+
+Book IDs: [101, 115, 123, 140, 156, 172, 189, 205, 221, 240]
+
+Searching for book ID 156:
+Linear search: found at index 4; 5 comparison(s)
+Binary search: found at index 4; 1 comparison(s)
+
+Searching for book ID 999:
+Linear search: not found; 10 comparison(s)
+Binary search: not found; 8 comparison(s)
+
+Efficiency:
+Linear search takes O(n) time and works with unsorted lists.
+Binary search takes O(log n) time but requires sorted IDs.
+For a large, sorted list, binary search is more efficient.
+
+TASK-5
+
+Scenario: An online shopping platform maintains product IDs for thousands of
+products. The system must locate a product quickly when a customer enters a product
+ID.
+Student Task:
+Use AI to generate Python implementations of Linear Search and Binary
+Search.
+Test both algorithms using the same collection of product IDs.
+Compare the execution time and number of comparisons for different input
+sizes.
+
+Test the algorithms with the first element, middle element, last element, and an
+element that does not exist.
+Ask AI to suggest optimizations and explain the limitations of each algorithm.
+Present the results in a table and justify which algorithm is appropriate for
+sorted product IDs.
+Expected Output:
+Python implementations of both algorithms.
+Test results for different input sizes.
+A comparison table containing execution time, number of comparisons, and
+time complexity.
+A brief conclusion based on the experimental results.
+
+CODE:
+
+""Compare linear and binary search for product IDs."""
+
+from time import perf_counter
+
+
+def linear_search(product_ids, target):
+	comparisons = 0
+	for index, product_id in enumerate(product_ids):
+		comparisons += 1
+		if product_id == target:
+			return index, comparisons
+	return -1, comparisons
+
+
+def binary_search(product_ids, target):
+	low, high = 0, len(product_ids) - 1
+	comparisons = 0
+	while low <= high:
+		middle = (low + high) // 2
+		comparisons += 1
+		if product_ids[middle] == target:
+			return middle, comparisons
+		comparisons += 1
+		if product_ids[middle] < target:
+			low = middle + 1
+		else:
+			high = middle - 1
+	return -1, comparisons
+
+
+def timed_search(search, product_ids, target, repeats=200):
+	"""Return average runtime in microseconds and comparisons per search."""
+	_, comparisons = search(product_ids, target)
+	start = perf_counter()
+	for _ in range(repeats):
+		search(product_ids, target)
+	elapsed_us = (perf_counter() - start) * 1_000_000 / repeats
+	return elapsed_us, comparisons
+
+
+def main():
+	sizes = (10, 100, 1_000)
+	print(f"{'Size':>6} {'Case':>9} {'Algorithm':<9} {'Result':>10} "
+		  f"{'Comparisons':>11} {'Avg time (us)':>14}")
+	print("-" * 66)
+
+	for size in sizes:
+		# Binary search requires sorted product IDs.
+		product_ids = list(range(100_000, 100_000 + size))
+		cases = (
+			("first", product_ids[0]),
+			("middle", product_ids[size // 2]),
+			("last", product_ids[-1]),
+			("missing", product_ids[-1] + 1),
+		)
+		for label, target in cases:
+			for name, search in (("Linear", linear_search),
+								 ("Binary", binary_search)):
+				index, _ = search(product_ids, target)
+				elapsed_us, comparisons = timed_search(search, product_ids, target)
+				result = str(index) if index >= 0 else "not found"
+				print(f"{size:6} {label:>9} {name:<9} {result:>10} "
+					  f"{comparisons:11} {elapsed_us:14.3f}")
+
+	print("\nTime complexity and limitations:")
+	print("- Linear search takes O(n) time in the average and worst cases and")
+	print("  O(1) extra space. It works on unsorted data, but can inspect every ID.")
+	print("- Binary search takes O(log n) time and O(1) extra space, but requires")
+	print("  sorted data and efficient random access. Sorting first costs O(n log n).")
+	print("Conclusion: binary search is generally better for already-sorted product")
+	print("IDs, especially as the collection grows, because it needs fewer comparisons.")
+
+
+if __name__ == "__main__":
+	main()
+
+
+OUTPUT:
+
+Size      Case Algorithm     Result Comparisons  Avg time (us)
+------------------------------------------------------------------
+    10     first Linear             0           1          0.215
+    10     first Binary             0           5          0.411
+    10    middle Linear             5           6          0.375
+    10    middle Binary             5           5          0.408
+    10      last Linear             9          10          0.679
+    10      last Binary             9           7          0.756
+    10   missing Linear     not found          10          0.450
+    10   missing Binary     not found           8          0.714
+   100     first Linear             0           1          0.367
+   100     first Binary             0          11          0.500
+   100    middle Linear            50          51          1.763
+   100    middle Binary            50          11          0.508
+   100      last Linear            99         100          3.443
+   100      last Binary            99          13          0.626
+   100   missing Linear     not found         100          3.258
+   100   missing Binary     not found          14          0.622
+  1000     first Linear             0           1          0.133
+  1000     first Binary             0          17          0.783
+  1000    middle Linear           500         501         18.825
+  1000    middle Binary           500          17          0.959
+  1000      last Linear           999        1000         43.659
+  1000      last Binary           999          19          1.258
+  1000   missing Linear     not found        1000         36.831
+  1000   missing Binary     not found          20          1.362
+
+Time complexity and limitations:
+- Linear search takes O(n) time in the average and worst cases and
+  O(1) extra space. It works on unsorted data, but can inspect every ID.
+- Binary search takes O(log n) time and O(1) extra space, but requires
+  sorted data and efficient random access. Sorting first costs O(n log n).
+Conclusion: binary search is generally better for already-sorted product
+IDs, especially as the collection grows, because it needs fewer comparisons.
+
+
+
+
+
+
+
